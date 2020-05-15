@@ -2,7 +2,7 @@
 <Mod id="20d1d40c-3085-11e9-b210-d663bd873d93" version="2.7">
   <Properties>
     <Name>FortifAI</Name>
-	   <Teaser>Each AI-city is a fort knox.</Teaser>
+	   <Teaser>Each AI-city is a fort knox, each unit a Terminator.</Teaser>
     <Description>Adds a lot asymetrical benefits to the AI, makes a domination-victory almost impossible.</Description>
     <Authors>Fampat</Authors>
     <EnabledByDefault>1</EnabledByDefault>
@@ -45,8 +45,8 @@
   			<LoadOrder>13055</LoadOrder>
   		</Properties>
   		<File>Base/Assets/UI/Replacements/UnitFlagManager_FAI.lua</File>    <!-- FortifAI _MUST_ load before GiftItToMe -->
-  		<File>Base/Assets/UI/FortifAI/Proxy.lua</File>
-  		<File>Base/Assets/UI/FortifAI/Messages.lua</File>
+  		<File>Base/Assets/UI/Additions/Proxy.lua</File>
+  		<File>Base/Assets/UI/Additions/Messages.lua</File>
   	</ImportFiles>
   	<ImportFiles id="FortifAI_ImportFiles_Basegame" criteria="Basegame">
   		<Properties>
@@ -81,8 +81,8 @@
   			<Context>InGame</Context>
   		</Properties>
   		<Items>
-  			<File>Base/Assets/UI/FortifAI/Proxy.xml</File>
-  			<File>Base/Assets/UI/FortifAI/Messages.xml</File>
+  			<File>Base/Assets/UI/Additions/Proxy.xml</File>
+  			<File>Base/Assets/UI/Additions/Messages.xml</File>
   		</Items>
   	</AddUserInterfaces>
 
@@ -134,10 +134,10 @@
   	<File>Base/Assets/UI/Replacements/UnitFlagManager_FAI.lua</File>
   	<File>DLC/Expansion1/UI/Replacements/CityBannerManager_FAI_XP1.lua</File>
   	<File>DLC/Expansion2/UI/Replacements/CityBannerManager_FAI_XP2.lua</File>
-  	<File>Base/Assets/UI/FortifAI/Proxy.lua</File>
-  	<File>Base/Assets/UI/FortifAI/Proxy.xml</File>
-  	<File>Base/Assets/UI/FortifAI/Messages.lua</File>
-  	<File>Base/Assets/UI/FortifAI/Messages.xml</File>
+  	<File>Base/Assets/UI/Additions/Proxy.lua</File>
+  	<File>Base/Assets/UI/Additions/Proxy.xml</File>
+  	<File>Base/Assets/UI/Additions/Messages.lua</File>
+  	<File>Base/Assets/UI/Additions/Messages.xml</File>
   	<File>Base/Assets/Text/FortifAI_general.xml</File>
   	<File>Base/Assets/Text/FortifAI_general_de.xml</File>
  </Files>

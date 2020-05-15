@@ -1,22 +1,22 @@
 [h1]FortifAI[/h1]
 
-This mod gives all AI-cities much stronger defense and offense capabilities to counter player snowballing to a degree.
+This mod gives all AI-cities much stronger defense and offense capabilities to counter player snowballing to a high degree.
 
 [b]Features[/b]
-The intention of this mod is to reduce the snowballing on the domination-victory and give a reasonable incentive to try other victories because domination, with this mod, can quiet be stressful and unfair XD
+The intention of this mod is to reduce the snowballing on the domination-victory and give a reasonable incentive to try other victories because domination, with this mod, can quiet be stressful XD
 
 This mod does not change any *strategic* AI behaviour, which means it should work great with AI-behaviour mods.
-The playstyle with this mod gets more "asymetrical" against the AI, since it is difficulty independent, which results in a more challanging game even on lower difficulties if a domination-victory is a thing ;)
+The playstyle with this mod gets alot more "asymetrical" against the AI, since it is difficulty independent, which results in a more challanging game even on lower difficulties if a true domination-victory is a thing for you ;)
 
 To summarize it somewhat:
 - AI gets free defense buildings depending on eras and population
 - AI gets a fortify-against-humanity-trait which helps cities in healing defenses and garrison (lay siege to reduce!)
 - AI gets occasionaly free promotions/units depending on relative strength and if on offense or defense
-- AI gets eco-boost depending on relative strength and if on offense or defense and if losing stuff
+- AI gets eco-boost depending on relative strength and if on offense or defense and if losing units
 - AI gets units heal buffs if human attacks with ranged attacks, can be countered by using melee units adjacent
 - AI gets a damage boost against human city defenses, dangerous if the gets to siege a human players city
-- No possibility of winning against AI with "kind-of-domination-victory" if domination victory is disabled! (If a AI ist the last living civ, it cities gets invincible)
-- AI will forget on a slower rate your aggressivnes!
+- No possibility of winning against AI with "kind-of-domination-victory" if domination victory is disabled! (If a AI is the last living civ, it cities gets invincible)
+- AI will forget on a slower rate your aggressiveness!
 
 All this only kicks in on AI vs. Human or vice versa, AI vs. AI is not modified.
 Having some AI allies is more of a help then ever!
@@ -24,7 +24,7 @@ Having some AI allies is more of a help then ever!
 If youre a player who dont like asymmetrical gameplay, this mod is _not_ for you.
 
 [b]Whats next?[/b]
-- Coming Soon!
+- Nothing planned right now, might change!
 
 [b]Known issues[/b]
 - None right now
