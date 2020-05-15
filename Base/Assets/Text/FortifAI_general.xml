@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameData>
+  <BaseGameText>
+    <!-- ENGLISH -->
+
+    <!-- Worldview screen -->
+  	<Row Tag="LOC_FORTIFAI_AGAINST_THE_HUMANITY_HEALTH">
+  		<Text>Fortify against humanity! [COLOR_GREEN]+{1_Num}[ENDCOLOR] Health</Text>
+  	</Row>
+  	<Row Tag="LOC_FORTIFAI_AGAINST_THE_HUMANITY_HEALTH_FULL">
+  		<Text>Fortify against humanity and domination! [COLOR_GREEN]+{1_Num}[ENDCOLOR] Health</Text>
+  	</Row>
+  	<Row Tag="LOC_FORTIFAI_AGAINST_THE_HUMANITY_DEFENSE">
+  		<Text>Fortify against humanity! [COLOR_LIGHTBLUE]+{1_Num}[ENDCOLOR] Defense</Text>
+  	</Row>
+  	<Row Tag="LOC_FORTIFAI_AGAINST_THE_HUMANITY_DEFENSE_FULL">
+  		<Text>Fortify against humanity and domination! [COLOR_LIGHTBLUE]+{1_Num}[ENDCOLOR] Defense</Text>
+  	</Row>
+  	<Row Tag="LOC_FORTIFAI_ENRAIGE_AGAINST_THE_HUMANITY_DEFENSE">
+  		<Text>EnrAIge against humanity! [COLOR_RED]-{1_Num}[ENDCOLOR] Defense</Text>
+  	</Row>
+  	<Row Tag="LOC_FORTIFAI_IVE_SURVIVED_PROMOTION">
+  		<Text>SurvAIved! Resist up!</Text>
+  	</Row>
+  	<Row Tag="LOC_FORTIFAI_FOREIGN_TERRITORY_HEAL">
+  		<Text>ForAIgn territory healing! [COLOR_GREEN]+{1_Num}[ENDCOLOR] Health</Text>
+  	</Row>
+  	<Row Tag="LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_DISTRICTS">
+  		<Text>War repAIrs against humanity, AI gets: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold for damaged districts</Text>
+  	</Row>
+  	<Row Tag="LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_UNITS">
+  		<Text>War repAIrs against humanity, AI gets: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold for damaged units</Text>
+  	</Row>
+  	<Row Tag="LOC_WORLD_REINFOCEMENT_GARRISON">
+  		<Text>Reinforcement arrived!</Text>
+  	</Row>
+  </BaseGameText>
+</GameData>

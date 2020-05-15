@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameData>
+  <LocalizedText>
+    <!-- GERMAN -->
+
+    <!-- Worldview screen -->
+  	<Replace Tag="LOC_FORTIFAI_AGAINST_THE_HUMANITY_HEALTH" Language="de_DE">
+  		<Text>Festung gegen die Menscheit! [COLOR_GREEN]+{1_Num}[ENDCOLOR] Heilung</Text>
+  	</Replace>
+  	<Replace Tag="LOC_FORTIFAI_AGAINST_THE_HUMANITY_HEALTH_FULL" Language="de_DE">
+  		<Text>Festung gegen die Menscheit und Eroberung! [COLOR_GREEN]+{1_Num}[ENDCOLOR] Heilung</Text>
+  	</Replace>
+  	<Replace Tag="LOC_FORTIFAI_AGAINST_THE_HUMANITY_DEFENSE" Language="de_DE">
+  		<Text>Festung gegen die Menscheit! [COLOR_LIGHTBLUE]+{1_Num}[ENDCOLOR] Verteidigung</Text>
+  	</Replace>
+  	<Replace Tag="LOC_FORTIFAI_AGAINST_THE_HUMANITY_DEFENSE_FULL" Language="de_DE">
+  		<Text>Festung gegen die Menscheit und Eroberung! [COLOR_LIGHTBLUE]+{1_Num}[ENDCOLOR] Verteidigung</Text>
+  	</Replace>
+  	<Replace Tag="LOC_FORTIFAI_ENRAIGE_AGAINST_THE_HUMANITY_DEFENSE" Language="de_DE">
+  		<Text>Wut auf die Menscheit! [COLOR_RED]-{1_Num}[ENDCOLOR] Verteidigung</Text>
+  	</Replace>
+  	<Replace Tag="LOC_FORTIFAI_IVE_SURVIVED_PROMOTION" Language="de_DE">
+  		<Text>Überlebt! Wiederstand rauf!</Text>
+  	</Replace>
+  	<Replace Tag="LOC_FORTIFAI_FOREIGN_TERRITORY_HEAL" Language="de_DE">
+  		<Text>Feindesland! [COLOR_GREEN]+{1_Num}[ENDCOLOR] Heilung</Text>
+  	</Replace>
+  	<Replace Tag="LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_DISTRICTS" Language="de_DE">
+  		<Text>Kriegsreparaturen gegen die Menscheit, KI erhält: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold (Distrikt-Schäden)</Text>
+  	</Replace>
+  	<Replace Tag="LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_UNITS" Language="de_DE">
+  		<Text>Kriegsreparaturen gegen die Menscheit, KI erhält: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold (Einheiten-Schäden)</Text>
+  	</Replace>
+  	<Replace Tag="LOC_WORLD_REINFOCEMENT_GARRISON" Language="de_DE">
+  		<Text>Verstärkung ist erschienen!</Text>
+  	</Replace>
+  </LocalizedText>
+</GameData>
