@@ -3,7 +3,7 @@
   <Properties>
     <Name>FortifAI</Name>
 	   <Teaser>Each AI-city is a fort knox.</Teaser>
-    <Description>Details here: https://steamcommunity.com/sharedfiles/filedetails/?id=1683757675</Description>
+    <Description>Adds a lot asymetrical benefits to the AI, makes a domination-victory almost impossible.</Description>
     <Authors>Fampat</Authors>
     <EnabledByDefault>1</EnabledByDefault>
     <DisabledAtStartup>0</DisabledAtStartup>
