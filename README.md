@@ -5,13 +5,13 @@ This mod gives all AI-cities much stronger defense and offense capabilities to c
 [b]Features[/b]
 The intention of this mod is to reduce the snowballing on the domination-victory and give a reasonable incentive to try other victories because domination, with this mod, can quiet be stressful XD
 
-This mod does not change any *strategic* AI behaviour, which means it should work great with AI-behaviour mods.
-The playstyle with this mod gets alot more "asymetrical" against the AI, since it is difficulty independent, which results in a more challanging game even on lower difficulties if a true domination-victory is a thing for you ;)
+This mod does not change any *strategic* AI behavior, which means it should work great with AI-behavior mods.
+The playstyle with this mod gets a lot more "asymmetrical" against the AI, since it is game-difficulty independent, which results in a more challenging game even on lower difficulties if a true domination-victory is a thing for you ;)
 
 To summarize it somewhat:
 - AI gets free defense buildings depending on eras and population
 - AI gets a fortify-against-humanity-trait which helps cities in healing defenses and garrison (lay siege to reduce!)
-- AI gets occasionaly free promotions/units depending on relative strength and if on offense or defense
+- AI gets occasionally free promotions/units depending on relative strength and if on offense or defense
 - AI gets eco-boost depending on relative strength and if on offense or defense and if losing units
 - AI gets units heal buffs if human attacks with ranged attacks, can be countered by using melee units adjacent
 - AI gets a damage boost against human city defenses, dangerous if the gets to siege a human players city
@@ -21,9 +21,9 @@ To summarize it somewhat:
 All this only kicks in on AI vs. Human or vice versa, AI vs. AI is not modified.
 Having some AI allies is more of a help then ever!
 
-If youre a player who dont like asymmetrical gameplay, this mod is _not_ for you.
+If you're a player who don't like asymmetrical gameplay, this mod is _not_ for you.
 
-[b]Whats next?[/b]
+[b]What's next?[/b]
 - Nothing planned right now, might change!
 
 [b]Known issues[/b]
@@ -33,9 +33,9 @@ If youre a player who dont like asymmetrical gameplay, this mod is _not_ for you
 Works with Basegame, R&F and GS.
 Currently localized for EN and DE
 
-[b]Every feedback and bugreport is welcome![/b]
+[b]Every feedback and bug-report is welcome![/b]
 Special thanks to Gedemon from civfanatics and Tully's annex city-state mod for giving examples on modding cross-ui-gamescript after GS-Update!
-Also very special thanks to Sparrow for the Cheat Menu Panel! Helps alot while modding!
+Also very special thanks to Sparrow for the Cheat Menu Panel! Helps a lot while modding!
 
 [b]Want to support?[/b]
 Rate or Donate!

@@ -2,7 +2,7 @@
 --	FortifAI
 --	FortifAIUnit
 --  Make the AI units stronger to defeat,
---  in a more asymetrical way, harder to kill and more dangerous
+--  in a more asymmetrical way, harder to kill and more dangerous
 -- ===========================================================================
 
 -- Variable to hold extra wall damage triggering
@@ -44,8 +44,8 @@ function OnUnitKilledInCombat(dPlayerID, dUnitID, aPlayerID, aUnitID)
 				-- Fetch plot the attacker unit stands on
 				local aUnitPlot = Map.GetPlot(aUnit:GetX(), aUnit:GetY());
 
-				-- If the attacker unit is within its own border, the AI will get a unit replacement (probably the AI tries to attack!)
-				-- if the AI has less or equal city-count and less military strength than the defender
+				-- If the attacker unit (human) is within its own border, the AI will get a unit replacement (probably the AI tries to attack the human!)
+				-- if the AI has less or equal city-count and less military strength than the defender (human)
 				-- ELSE The defender AI will get a refund
 				if (aUnitPlot ~= nil and aUnitPlot:GetOwner() == aPlayerID and dPlayerCityCount <= aPlayerCityCount and dPlayerMilitaryMeight < aPlayerMilitaryMeight) then
 					-- Initialize city table
@@ -85,13 +85,13 @@ function OnUnitKilledInCombat(dPlayerID, dUnitID, aPlayerID, aUnitID)
 					-- Either spawn a unit in a single city, or a random one on multiple possibilities,
 					-- if none, compensate with gold
 					if #possibleCities == 1 then
-						-- Spawn unit in the only city available
+						-- Spawn unit in the only city that is available
 						cityToSpawnUnit = possibleCities[0] or possibleCities[1];
 					elseif #possibleCities > 1 then
 						-- Spawn unit in a random available city
 						local randomCityTableIndex = (Game.GetRandNum(#possibleCities) + 1);
 
-						-- Spawn unit
+						-- Spawn unit in this city
 						cityToSpawnUnit = possibleCities[randomCityTableIndex];
 					else
 						-- Fetch units cost
@@ -115,11 +115,11 @@ function OnUnitKilledInCombat(dPlayerID, dUnitID, aPlayerID, aUnitID)
 							Game.AddWorldViewText(0, Locale.Lookup("LOC_WORLD_REINFOCEMENT_GARRISON"), cityToSpawnUnit:GetX(), cityToSpawnUnit:GetY(), 0);
 						end
 					end
-				else
-					-- Fetch units cost
+				else	-- AI is stronger than human
+					-- Fetch defender units cost
 					local dUnitCost = GameInfo.Units[dUnit:GetType()].Cost;
 
-					-- For a strong AI the replacement only a fraction
+					-- For a strong AI the replacement is only a fraction
 					local dCostCompensationModifier = 0.15;
 
 					-- How much boost the AI will get is based on its number of cities and military meight compared to the human player
@@ -136,6 +136,7 @@ function OnUnitKilledInCombat(dPlayerID, dUnitID, aPlayerID, aUnitID)
 	end
 end
 
+-- Add gold as a compensation for a kill
 function CompensateWithGold(pPlayer, pGoldAmount)
 	-- Player is real? and gold is real?
 	if (pPlayer ~= nill and pGoldAmount > 0) then

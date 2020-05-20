@@ -2,7 +2,7 @@
 --	FortifAI
 --	FortifAIDistrict
 --  Make the AI cities stronger to defeat,
---  in a more asymetrical way, harder to crack overall
+--  in a more asymmetrical way, harder to crack overall
 -- ===========================================================================
 
 -- Variable to hold heal triggering
@@ -47,7 +47,7 @@ function OnDistrictDamageChanged(playerID, districtID, damageType, newDamage, ol
 			-- Depending on the player era, the fortification heal differs
 			-- The later the era, the higher the fortification heal bonus
 			if pEra.ChronologyIndex == 2 then		-- Classic
-				eGarrisonModifier = 0;
+				eGarrisonModifier = 0.0;
 				eOuterDefenseModifier = 0.16;
 				districtIsSiegedModifier = 0.50;	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
 			elseif pEra.ChronologyIndex == 3 then	-- Medieval
@@ -104,8 +104,8 @@ function OnDistrictDamageChanged(playerID, districtID, damageType, newDamage, ol
 					if ExposedMembers.GetSiegeStatus ~= nil then
 						local districtIsSieged = ExposedMembers.GetSiegeStatus(playerID, damagedDistrict:GetX(), damagedDistrict:GetY());
 
-						-- On siege attacks reduce the fortification heal
-						if districtIsSieged then
+						-- On siege attacks reduce the fortification heal in case the city can be taken
+						if districtIsSieged and not isCityInvincible() then
 							eGarrisonModifier = eGarrisonModifier * districtIsSiegedModifier;
 							eOuterDefenseModifier = eOuterDefenseModifier * districtIsSiegedModifier;
 						end
