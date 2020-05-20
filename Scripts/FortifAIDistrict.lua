@@ -284,18 +284,18 @@ function SpawnDefendingUnit (damagedDistrict, pPlayer)
 		-- Spawn a garrisoned ranged unit only by chance
 		if randomNumber <= improvementChance then
 			-- Check the players available techs
-			local pHasTechArcher = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_ARCHERY"].Index);							-- ANCIENT
-			local pHasTechForCatapult = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_ENGINEERING"].Index);				-- CLASSIC
-			local pHasTechForCrossbowman = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_MACHINERY"].Index);				-- MEDIEVAL
-			local pHasTechForMusketman = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_GUNPOWDER"].Index);					-- RENSSASIANCE
-			local pHasTechForBombard = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_METAL_CASTING"].Index);				-- RENSSASIANCE
-			local pHasTechForFieldCannon = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_BALLISTICS"].Index);				-- INDUSTRIAL
-			local pHasTechForInfantry = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_REPLACEABLE_PARTS"].Index);			-- MODERN
-			local pHasTechForModernArmor = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_COMPOSITES"].Index);				-- MODERN
-			local pHasTechForArtillery = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_STEEL"].Index);						-- MODERN
+			local pHasTechArcher = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_ARCHERY"].Index);												-- ANCIENT
+			local pHasTechForCatapult = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_ENGINEERING"].Index);							-- CLASSIC
+			local pHasTechForCrossbowman = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_MACHINERY"].Index);							-- MEDIEVAL
+			local pHasTechForMusketman = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_GUNPOWDER"].Index);								-- RENSSASIANCE
+			local pHasTechForBombard = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_METAL_CASTING"].Index);							-- RENSSASIANCE
+			local pHasTechForFieldCannon = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_BALLISTICS"].Index);						-- INDUSTRIAL
+			local pHasTechForInfantry = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_REPLACEABLE_PARTS"].Index);				-- MODERN
+			local pHasTechForModernArmor = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_COMPOSITES"].Index);						-- MODERN
+			local pHasTechForArtillery = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_STEEL"].Index);										-- MODERN
 			local pHasTechForMachineGun = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_ADVANCED_BALLISTICS"].Index);		-- ATOMIC
 			local pHasTechForRocketArtillery = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_GUIDANCE_SYSTEMS"].Index);	-- INFORMATION
-			local pHasTechForGDR = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_ROBOTICS"].Index);						-- FUTURE
+			local pHasTechForGDR = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_ROBOTICS"].Index);											-- FUTURE
 
 			-- Check player available civics for corps and armies
 			local pHasCivicNationalism = pPlayer:GetCulture():HasCivic(GameInfo.Civics["CIVIC_NATIONALISM"].Index);
