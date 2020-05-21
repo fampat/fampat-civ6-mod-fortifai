@@ -1,9 +1,15 @@
 -- ===========================================================================
---	FortifAI
---	FortifAIDistrict
---  Make the AI cities stronger to defeat,
---  in a more asymmetrical way, harder to crack overall
+-- FortifAI
+-- FortifAIDistrict
+-- Make the AI cities stronger to defeat,
+-- in a more asymmetrical way, harder to crack overall
 -- ===========================================================================
+
+-- Include the effect scaling
+include("FortifAIEffectScale.lua");
+
+-- Debugging mode switch
+local debugMode = true;
 
 -- Variable to hold heal triggering
 local districtCombatValidDefender = {};
@@ -40,36 +46,36 @@ function OnDistrictDamageChanged(playerID, districtID, damageType, newDamage, ol
 			local pEra = GameInfo.Eras[pPlayer:GetEra()];
 
 			-- Initialize heal modifiers
-			local eGarrisonModifier = 0.0;
-			local eOuterDefenseModifier = 0.0;
-			local districtIsSiegedModifier = 0.50;
+			local eGarrisonModifier = effectScale(0.0);
+			local eOuterDefenseModifier = effectScale(0.0);
+			local districtIsSiegedModifier = effectScale(0.45);
 
 			-- Depending on the player era, the fortification heal differs
 			-- The later the era, the higher the fortification heal bonus
 			if pEra.ChronologyIndex == 2 then		-- Classic
-				eGarrisonModifier = 0.0;
-				eOuterDefenseModifier = 0.16;
-				districtIsSiegedModifier = 0.50;	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
+				eGarrisonModifier = effectScale(0.0);
+				eOuterDefenseModifier = effectScale(0.16);
+				districtIsSiegedModifier = effectScale(0.45);	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
 			elseif pEra.ChronologyIndex == 3 then	-- Medieval
-				eGarrisonModifier = 0.13;
-				eOuterDefenseModifier = 0.25;
-				districtIsSiegedModifier = 0.47;	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
+				eGarrisonModifier = effectScale(0.13);
+				eOuterDefenseModifier = effectScale(0.25);
+				districtIsSiegedModifier = effectScale(0.44);	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
 			elseif pEra.ChronologyIndex == 4 then	-- Renaissance
-				eGarrisonModifier = 0.28;
-				eOuterDefenseModifier = 0.35;
-				districtIsSiegedModifier = 0.43;	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
+				eGarrisonModifier = effectScale(0.28);
+				eOuterDefenseModifier = effectScale(0.35);
+				districtIsSiegedModifier = effectScale(0.41);	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
 			elseif pEra.ChronologyIndex == 5 then	-- Industrial
-				eGarrisonModifier = 0.36;
-				eOuterDefenseModifier = 0.44;
-				districtIsSiegedModifier = 0.38;	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
+				eGarrisonModifier = effectScale(0.36);
+				eOuterDefenseModifier = effectScale(0.44);
+				districtIsSiegedModifier = effectScale(0.38);	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
 			elseif pEra.ChronologyIndex == 6 then	-- Modern
-				eGarrisonModifier = 0.44;
-				eOuterDefenseModifier = 0.48;
-				districtIsSiegedModifier = 0.35;	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
+				eGarrisonModifier = effectScale(0.44);
+				eOuterDefenseModifier = effectScale(0.48);
+				districtIsSiegedModifier = effectScale(0.35);	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
 			elseif pEra.ChronologyIndex >= 7 then	-- Atomic to information/future (with exp2)
-				eGarrisonModifier = 0.49;
-				eOuterDefenseModifier = 0.54;
-				districtIsSiegedModifier = 0.32;	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
+				eGarrisonModifier = effectScale(0.49);
+				eOuterDefenseModifier = effectScale(0.54);
+				districtIsSiegedModifier = effectScale(0.30);	-- Only X% of eGarrisonModifier/eOuterDefenseModifier gets healed in case of a siege
 			end
 
 			-- Loop the player cities
@@ -117,6 +123,9 @@ function OnDistrictDamageChanged(playerID, districtID, damageType, newDamage, ol
 						-- Max (100%) garrison and defense heal!
 						eGarrisonModifier = 1;
 						eOuterDefenseModifier = 1;
+
+						-- Debug log
+						WriteToLog("City is invincable!");
 					end
 
 					-- Fortify heal only triggers if the modifier is greater zero
@@ -179,7 +188,7 @@ function OnDistrictDamageChanged(playerID, districtID, damageType, newDamage, ol
 								SpawnDefendingUnit(damagedDistrict, pPlayer);
 							end
 
-							-- Compensate the damage with gold to the AI player to increase its change for defend proper
+							-- Compensate the damage with gold to the AI player to increase its change for defend themself properly
 							CompensateDamageWithGold(damageModified, pPlayer);
 
 							-- Drop fortifAI messages if they has been set - AGAINST HUMANITY!
@@ -203,7 +212,7 @@ function CompensateDamageWithGold (damageModified, pPlayer)
 	-- Compensate damage done to AI with gold: Damage done -> multiply with factor -> As gold
 	if (damageModified ~= nil and pPlayer ~= nil) then
 		-- Compensation factor (10x) the damage amount as gold
-		local damagePaymentFactor = 11;
+		local damagePaymentFactor = effectScale(11);
 
 		-- Round up the nice sum
 		local pGoldCompensationValue = RoundNumber((damageModified * damagePaymentFactor), 0);
@@ -213,6 +222,9 @@ function CompensateDamageWithGold (damageModified, pPlayer)
 
 		-- Add up gold compensation
 		goldCompensationThisTurn = (goldCompensationThisTurn + pGoldCompensationValue);
+
+		-- Debug log
+		WriteToLog("Damage compensated with gold: "..pGoldCompensationValue);
 	end
 end
 
@@ -276,13 +288,16 @@ function SpawnDefendingUnit (damagedDistrict, pPlayer)
 		local pUnitPromotions = 0;
 
 		-- Spawn chance in percent
-		local improvementChance = 25;
+		local spawnChance = effectScale(25);
 
 		-- Throw the dice!
 		local randomNumber = Game.GetRandNum(99);
 
 		-- Spawn a garrisoned ranged unit only by chance
-		if randomNumber <= improvementChance then
+		if randomNumber <= spawnChance then
+			-- Debug log
+			WriteToLog("Spawning/Promoting defending AI unit succeeded!");
+
 			-- Check the players available techs
 			local pHasTechArcher = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_ARCHERY"].Index);												-- ANCIENT
 			local pHasTechForCatapult = pPlayer:GetTechs():HasTech(GameInfo.Technologies["TECH_ENGINEERING"].Index);							-- CLASSIC
@@ -325,6 +340,9 @@ function SpawnDefendingUnit (damagedDistrict, pPlayer)
 										if (PlayersVisibility[Game.GetLocalPlayer()]:IsVisible(pUnit:GetX(), pUnit:GetY())) then
 											Game.AddWorldViewText(0, Locale.Lookup("LOC_FORTIFAI_IVE_SURVIVED_PROMOTION"), pUnit:GetX(), pUnit:GetY(), 0);
 										end
+
+										-- Debug log
+										WriteToLog("Garrisoned unit promoted!");
 
 										-- The END
 										break;
@@ -395,6 +413,9 @@ function SpawnDefendingUnit (damagedDistrict, pPlayer)
 						pNewUnit:SetMilitaryFormation(MilitaryFormationTypes.CORPS_FORMATION);
 					end
 				end
+
+				-- Debug log
+				WriteToLog("Spawning defending AI unit succeeded!");
 			end
 		end
 	end
@@ -452,6 +473,13 @@ function RoundNumber(num, numDecimalPlaces)
     return math.ceil(num * mult + 0.5) / mult
   end
   return math.ceil(num + 0.5)
+end
+
+-- Debug function for logging
+function WriteToLog(message)
+	if (debugMode and message ~= nil) then
+		print(message);
+	end
 end
 
 -- Main function for initialization

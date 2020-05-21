@@ -1,10 +1,16 @@
 -- ===========================================================================
---	FortifAI
---	FortifAIUnit
---  Credits go to Tiramisu (Steam) for Legit AI Cheats
---  Make the AI stronger as an opponent,
---  in a more asymmetrical way, harder to crack
+-- FortifAI
+-- FortifAIUnit
+-- Credits go to Tiramisu (Steam) for Legit AI Cheats
+-- Make the AI stronger as an opponent,
+-- in a more asymmetrical way, harder to crack
 -- ===========================================================================
+
+-- Include the effect scaling
+include("FortifAIEffectScale.lua");
+
+-- Debugging mode switch
+local debugMode = true;
 
 -- This function grants one promotion to a random combat unit to an AI civilization,
 -- every time it loses a unit in combat (during their or the attacker's turn)
@@ -46,25 +52,31 @@ function OnUnitKilledInCombat(pVictimID, unitKilledID, pKillerID, unitAttackerID
 				local pUnits = pPlayerVictim:GetUnits();
 
 				-- Random one of it
-				local pUnit = GetRandomCombatUnit(pVictimID, pUnits)
+				local pUnit = GetRandomCombatUnitByChance(pVictimID, pUnits);
 
-				-- Loop all possible promotions
-				for promotion in GameInfo.UnitPromotions() do
-					if (GameInfo.Units[pUnit:GetType()].PromotionClass == promotion.PromotionClass) then
-						local unitExperience = pUnit:GetExperience();
+				-- We got lucky?
+				if (pUnit ~= nil) then
+					-- Loop all possible promotions
+					for promotion in GameInfo.UnitPromotions() do
+						if (GameInfo.Units[pUnit:GetType()].PromotionClass == promotion.PromotionClass) then
+							local unitExperience = pUnit:GetExperience();
 
-						-- Apply a promotion to a unit it doesn not already have
-						if (not unitExperience:HasPromotion(promotion.Index)) then
-							if (promotion ~= nil) then
-								unitExperience:SetPromotion(promotion.Index);
+							-- Apply a promotion to a unit it doesn not already have
+							if (not unitExperience:HasPromotion(promotion.Index)) then
+								if (promotion ~= nil) then
+									unitExperience:SetPromotion(promotion.Index);
 
-								-- Promotion notice eh..
-								if (PlayersVisibility[Game.GetLocalPlayer()]:IsVisible(pUnit:GetX(), pUnit:GetY())) then
-									Game.AddWorldViewText(0, Locale.Lookup("LOC_FORTIFAI_IVE_SURVIVED_PROMOTION"), pUnit:GetX(), pUnit:GetY(), 0);
+									-- Promotion notice eh..
+									if (PlayersVisibility[Game.GetLocalPlayer()]:IsVisible(pUnit:GetX(), pUnit:GetY())) then
+										Game.AddWorldViewText(0, Locale.Lookup("LOC_FORTIFAI_IVE_SURVIVED_PROMOTION"), pUnit:GetX(), pUnit:GetY(), 0);
+									end
+
+									-- Debug log
+									WriteToLog("Replaced lost unit with a promotion!");
+
+									-- End of the wor... err, loop
+									break;
 								end
-
-								-- End of the wor... err, loop
-								break;
 							end
 						end
 					end
@@ -75,22 +87,40 @@ function OnUnitKilledInCombat(pVictimID, unitKilledID, pKillerID, unitAttackerID
 end
 
 -- Select random unit
-function GetRandomCombatUnit(pPlayerID, pUnits)
-    local iUnitIDs = {};
+function GetRandomCombatUnitByChance(pPlayerID, pUnits)
+	-- Select a unit by chance
+	local unitSelectionChance = effectScale(75);
 
-	-- Loop all player-units
-	for _, pUnit in pUnits:Members() do
-		local iHitpoints = pUnit:GetMaxDamage() - pUnit:GetDamage();
+	-- Throw the dice!
+	local randomNumber = Game.GetRandNum(99);
 
-		-- List up all available units
-		if (pUnit ~= nil and pUnit:GetCombat() > 0 and iHitpoints > 0 and pUnit:GetX() >= 0 and pUnit:GetY() >= 0) then
-			iUnitIDs[#iUnitIDs + 1] = pUnit:GetID();
+	-- Spawn a garrisoned ranged unit only by chance
+	if randomNumber <= unitSelectionChance then
+	  local iUnitIDs = {};
+
+		-- Loop all player-units
+		for _, pUnit in pUnits:Members() do
+			local iHitpoints = pUnit:GetMaxDamage() - pUnit:GetDamage();
+
+			-- List up all available units
+			if (pUnit ~= nil and pUnit:GetCombat() > 0 and iHitpoints > 0 and pUnit:GetX() >= 0 and pUnit:GetY() >= 0) then
+				iUnitIDs[#iUnitIDs + 1] = pUnit:GetID();
+			end
 		end
+
+		-- Pick a random unit
+		local validRandomNumber = (Game.GetRandNum((#iUnitIDs - 1)) + 1);
+		return UnitManager.GetUnit(pPlayerID, iUnitIDs[validRandomNumber]);
 	end
 
-	-- Pick a random unit
-	local validRandomNumber = (Game.GetRandNum((#iUnitIDs - 1)) + 1);
-	return UnitManager.GetUnit(pPlayerID, iUnitIDs[validRandomNumber]);
+	return nil;
+end
+
+-- Debug function for logging
+function WriteToLog(message)
+	if (debugMode and message ~= nil) then
+		print(message);
+	end
 end
 
 function Initialize()

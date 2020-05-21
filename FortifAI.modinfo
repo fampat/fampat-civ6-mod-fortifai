@@ -44,6 +44,8 @@
   		<Properties>
   			<LoadOrder>13055</LoadOrder>
   		</Properties>
+      <File>FortifAIConfig.lua</File>
+      <File>Scripts/Helper/FortifAIEffectScale.lua</File>
   		<File>Base/Assets/UI/Replacements/UnitFlagManager_FAI.lua</File>    <!-- FortifAI _MUST_ load before GiftItToMe -->
   		<File>Base/Assets/UI/Additions/Proxy.lua</File>
   		<File>Base/Assets/UI/Additions/Messages.lua</File>
@@ -52,19 +54,19 @@
   		<Properties>
   			<LoadOrder>13055</LoadOrder>
   		</Properties>
-  		<File>Base/Assets/UI/Replacements/CityBannerManager_FAI.lua</File>
+  		<File>Base/Assets/UI/Replacements/WorldView/CityBannerManager_FAI.lua</File>
   	</ImportFiles>
   	<ImportFiles id="FortifAI_ImportFiles_Expansion1" criteria="Expansion1">
   		<Properties>
   			<LoadOrder>13055</LoadOrder>
   		</Properties>
-  		<File>DLC/Expansion1/UI/Replacements/CityBannerManager_FAI_XP1.lua</File>
+  		<File>DLC/Expansion1/UI/CityBanners/Replacements/CityBannerManager_FAI_XP1.lua</File>
   	</ImportFiles>
   	<ImportFiles id="FortifAI_ImportFiles_Expansion2" criteria="Expansion2">
   		<Properties>
   			<LoadOrder>13055</LoadOrder>
   		</Properties>
-  		<File>DLC/Expansion2/UI/Replacements/CityBannerManager_FAI_XP2.lua</File>
+  		<File>DLC/Expansion2/UI/CityBanners/Replacements/CityBannerManager_FAI_XP2.lua</File>
   	</ImportFiles>
 
   	<AddGameplayScripts id="FortifAI_Scripts">
@@ -97,21 +99,21 @@
   		<Properties>
   			<LoadOrder>13055</LoadOrder>
   			<LuaContext>CityBannerManager</LuaContext>
-  			<LuaReplace>Base/Assets/UI/Replacements/CityBannerManager_FAI.lua</LuaReplace>
+  			<LuaReplace>Base/Assets/UI/Replacements/WorldView/CityBannerManager_FAI.lua</LuaReplace>
   		</Properties>
   	</ReplaceUIScript>
   	<ReplaceUIScript id="FortifAI_UI_Replacement_CityBannerManager_XP1" criteria="Expansion1">
   		<Properties>
   			<LoadOrder>13055</LoadOrder>
   			<LuaContext>CityBannerManager</LuaContext>
-  			<LuaReplace>DLC/Expansion1/UI/Replacements/CityBannerManager_FAI_XP1.lua</LuaReplace>
+  			<LuaReplace>DLC/Expansion1/UI/CityBanners/Replacements/CityBannerManager_FAI_XP1.lua</LuaReplace>
   		</Properties>
   	</ReplaceUIScript>
   	<ReplaceUIScript id="FortifAI_UI_Replacement_CityBannerManager_XP2" criteria="Expansion2">
   		<Properties>
   			<LoadOrder>13055</LoadOrder>
   			<LuaContext>CityBannerManager</LuaContext>
-  			<LuaReplace>DLC/Expansion2/UI/Replacements/CityBannerManager_FAI_XP2.lua</LuaReplace>
+  			<LuaReplace>DLC/Expansion2/UI/CityBanners/Replacements/CityBannerManager_FAI_XP2.lua</LuaReplace>
   		</Properties>
   	</ReplaceUIScript>
 
@@ -127,13 +129,15 @@
     <File>Database/FortifAIFreeWallsAI.sql</File>
   	<File>Database/FortifAIStratResDiscountAIGS.sql</File>
   	<File>Database/FortifAIGrievanceDecayReducedGS.sql</File>
+    <File>FortifAIConfig.lua</File>
+    <File>Scripts/Helper/FortifAIEffectScale.lua</File>
     <File>Scripts/FortifAIDistrict.lua</File>
     <File>Scripts/FortifAIUnit.lua</File>
     <File>Scripts/FortifAIPromoteUnit.lua</File>
-  	<File>Base/Assets/UI/Replacements/CityBannerManager_FAI.lua</File>
+  	<File>Base/Assets/UI/Replacements/WorldView/CityBannerManager_FAI.lua</File>
   	<File>Base/Assets/UI/Replacements/UnitFlagManager_FAI.lua</File>
-  	<File>DLC/Expansion1/UI/Replacements/CityBannerManager_FAI_XP1.lua</File>
-  	<File>DLC/Expansion2/UI/Replacements/CityBannerManager_FAI_XP2.lua</File>
+  	<File>DLC/Expansion1/UI/CityBanners/Replacements/CityBannerManager_FAI_XP1.lua</File>
+  	<File>DLC/Expansion2/UI/CityBanners/Replacements/CityBannerManager_FAI_XP2.lua</File>
   	<File>Base/Assets/UI/Additions/Proxy.lua</File>
   	<File>Base/Assets/UI/Additions/Proxy.xml</File>
   	<File>Base/Assets/UI/Additions/Messages.lua</File>

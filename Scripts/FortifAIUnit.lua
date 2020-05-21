@@ -1,9 +1,15 @@
 -- ===========================================================================
---	FortifAI
---	FortifAIUnit
---  Make the AI units stronger to defeat,
---  in a more asymmetrical way, harder to kill and more dangerous
+-- FortifAI
+-- FortifAIUnit
+-- Make the AI units stronger to defeat,
+-- in a more asymmetrical way, harder to kill and more dangerous
 -- ===========================================================================
+
+-- Include the effect scaling
+include("FortifAIEffectScale.lua");
+
+-- Debugging mode switch
+local debugMode = true;
 
 -- Variable to hold extra wall damage triggering
 local districtCombatValidDefender = {};
@@ -114,18 +120,21 @@ function OnUnitKilledInCombat(dPlayerID, dUnitID, aPlayerID, aUnitID)
 						if (pLocalPlayerVis:IsVisible(cityToSpawnUnit:GetX(), cityToSpawnUnit:GetY())) then
 							Game.AddWorldViewText(0, Locale.Lookup("LOC_WORLD_REINFOCEMENT_GARRISON"), cityToSpawnUnit:GetX(), cityToSpawnUnit:GetY(), 0);
 						end
+
+						-- Debug log
+						WriteToLog("Spawning defending garrison AI unit succeeded!");
 					end
 				else	-- AI is stronger than human
 					-- Fetch defender units cost
 					local dUnitCost = GameInfo.Units[dUnit:GetType()].Cost;
 
 					-- For a strong AI the replacement is only a fraction
-					local dCostCompensationModifier = 0.15;
+					local dCostCompensationModifier = effectScale(0.15);
 
 					-- How much boost the AI will get is based on its number of cities and military meight compared to the human player
 					-- AI Does have less or equal cities and military meight, increase replacement strength/compensation
 					if (dPlayerCityCount <= aPlayerCityCount and dPlayerMilitaryMeight < aPlayerMilitaryMeight) then
-						dCostCompensationModifier = 0.85;
+						dCostCompensationModifier = effectScale(0.85);
 					end
 
 					-- Unit dies on non-human terrain due to human attack, give gold equal halfe the unit value to ai
@@ -138,14 +147,20 @@ end
 
 -- Add gold as a compensation for a kill
 function CompensateWithGold(pPlayer, pGoldAmount)
+	-- Scale the gold amount accoringly
+	local pScaledGoldAmount = effectScale(pGoldAmount);
+
 	-- Player is real? and gold is real?
-	if (pPlayer ~= nill and pGoldAmount > 0) then
+	if (pPlayer ~= nill and pScaledGoldAmount > 0) then
 		-- Round the gold amount add it to the AI
-		local pGoldRounded = RoundNumber(pGoldAmount, 0)
+		local pGoldRounded = RoundNumber(pScaledGoldAmount, 0)
 		pPlayer:GetTreasury():ChangeGoldBalance(pGoldRounded);
 
 		-- Add up gold compensation
 		goldCompensationThisTurn = (goldCompensationThisTurn + pGoldRounded);
+
+		-- Debug log
+		WriteToLog("Damage compensated with gold: "..pGoldRounded);
 	end
 end
 
@@ -202,7 +217,7 @@ function OnUnitDamageChanged(playerID:number, unitID:number, newDamage:number, o
 						if (aUnitRange > 0 and dUnitRange == 0) then
 							-- Variables huh?
 							local pLocalPlayerVis = PlayersVisibility[Game.GetLocalPlayer()];
-							local dUnitHealModifier = 0.15;
+							local dUnitHealModifier = effectScale(0.15);
 
 							-- Collect plot/location data where defender was damaged
 							local dPlot = Map.GetPlot(dUnit:GetX(), dUnit:GetY());
@@ -255,6 +270,9 @@ function OnUnitDamageChanged(playerID:number, unitID:number, newDamage:number, o
 										if (pLocalPlayerVis:IsVisible(dUnit:GetX(), dUnit:GetY())) then
 											Game.AddWorldViewText(0, Locale.Lookup("LOC_FORTIFAI_IVE_SURVIVED_PROMOTION"), dUnit:GetX(), dUnit:GetY(), 0);
 										end
+
+										-- Debug log
+										WriteToLog("Promoted defending unit!");
 									end
 								end
 							end
@@ -286,6 +304,9 @@ function OnUnitDamageChanged(playerID:number, unitID:number, newDamage:number, o
 								if (fortifAIUnitHealMessage ~= nil and fortifAIDamageMessage ~= nil and pLocalPlayerVis:IsVisible(dUnit:GetX(), dUnit:GetY())) then
 									Game.AddWorldViewText(EventSubTypes.DAMAGE, fortifAIDamageMessage, dUnit:GetX(), dUnit:GetY(), 0);
 									Game.AddWorldViewText(0, fortifAIUnitHealMessage, dUnit:GetX(), dUnit:GetY(), 0);
+
+									-- Debug log
+									WriteToLog("Healed defending unit: "..damageDeltaModifiedAsHeal);
 								end
 							end
 						end
@@ -300,7 +321,7 @@ function OnDistrictDamageChanged(playerID:number, districtID:number, damageType:
 	-- Fetch the player (damaged player)
 	local pPlayer = Players[playerID];
 
-	-- Extra damage only applies to human players (attacker check for ai is done in OnCombat)
+	-- Extra damage only applies to human players (attacker check for AI is done in OnCombat)
 	if (pPlayer ~= nil and pPlayer:IsHuman()) then
 		-- Fetch the district types we want to act on
 		local gDistrictCityCenterIndex = GameInfo.Districts["DISTRICT_CITY_CENTER"].Index;
@@ -325,17 +346,17 @@ function OnDistrictDamageChanged(playerID:number, districtID:number, damageType:
 			-- Depending on the player era, the damage boost differs
 			-- The later the era, the higher the damage boost
 			if pEra.ChronologyIndex == 2 then		-- Classic
-				eOuterDefenseModifier = 0.15;
+				eOuterDefenseModifier = effectScale(0.15);
 			elseif pEra.ChronologyIndex == 3 then	-- Medieval
-				eOuterDefenseModifier = 0.30;
+				eOuterDefenseModifier = effectScale(0.30);
 			elseif pEra.ChronologyIndex == 4 then	-- Renaissance
-				eOuterDefenseModifier = 0.45;
+				eOuterDefenseModifier = effectScale(0.45);
 			elseif pEra.ChronologyIndex == 5 then	-- Industrial
-				eOuterDefenseModifier = 0.55;
+				eOuterDefenseModifier = effectScale(0.55);
 			elseif pEra.ChronologyIndex == 6 then	-- Modern
-				eOuterDefenseModifier = 0.62;
+				eOuterDefenseModifier = effectScale(0.62);
 			elseif pEra.ChronologyIndex >= 7 then	-- Atomic to information/future (with exp2)
-				eOuterDefenseModifier = 0.67;
+				eOuterDefenseModifier = effectScale(0.67);
 			end
 
 			-- Loop the player cities
@@ -371,7 +392,7 @@ function OnDistrictDamageChanged(playerID:number, districtID:number, damageType:
 
 						-- On siege attacks reduce the fortification heal
 						if districtIsSieged then
-							eOuterDefenseModifier = eOuterDefenseModifier * 1.50;
+							eOuterDefenseModifier = eOuterDefenseModifier * effectScale(1.50);
 						end
 					end
 
@@ -396,6 +417,9 @@ function OnDistrictDamageChanged(playerID:number, districtID:number, damageType:
 						if (EnrAIgeDamageMessage ~= nil and fortifAIDamageMessage ~= nil and pLocalPlayerVis:IsVisible(damagedDistrict:GetX(), damagedDistrict:GetY())) then
 							Game.AddWorldViewText(EventSubTypes.DAMAGE, fortifAIDamageMessage, damagedDistrict:GetX(), damagedDistrict:GetY(), 0);
 							Game.AddWorldViewText(0, EnrAIgeDamageMessage, damagedDistrict:GetX(), damagedDistrict:GetY(), 0);
+
+							-- Debug log
+							WriteToLog("Damage boosted against human: "..damageModified);
 						end
 					end
 				end
@@ -468,10 +492,12 @@ function OnCombat(combatResult)
 	end
 end
 
+-- Fetch land combat stats
 function OnGetMilitaryLandCombatStrength (pPlayer)
 	return GetMilitaryLandCombatStrength(pPlayer)
 end
 
+-- Calculate land combat stats
 function GetMilitaryLandCombatStrength (pPlayer)
 	-- Initial values
 	local pMilitaryLandCombatStrength = 0;
@@ -558,13 +584,11 @@ function GetMilitaryLandCombatStrength (pPlayer)
 		pMilitaryLandCombatStrength = (pPlayerTreasury / (pChronoIndex * 80));
 	end
 
-	-- DEBUG
-	-- print("Player Military Strength: "..pMilitaryLandCombatStrength)
-
 	-- This is my ultimate power!
 	return pMilitaryLandCombatStrength;
 end
 
+-- Check if a melee-unit is next to a unit
 function IsOtherPlayerMeleeUnitAdjacent (oPlayer, dUnit, dPlot)
 	-- Fetch all adjacent plots
 	local dUnitAdjacentPlots = GetAdjacentPlots(dPlot);
@@ -623,6 +647,13 @@ function RoundNumber(num, numDecimalPlaces)
     return math.ceil(num * mult + 0.5) / mult
   end
   return math.ceil(num + 0.5)
+end
+
+-- Debug function for logging
+function WriteToLog(message)
+	if (debugMode and message ~= nil) then
+		print(message);
+	end
 end
 
 -- Main function for initialization
