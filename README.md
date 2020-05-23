@@ -17,6 +17,7 @@ To summarize it somewhat:
 - AI gets a damage boost against human city defenses, dangerous if the gets to siege a human players city
 - No possibility of winning against AI with "kind-of-domination-victory" if domination victory is disabled! (If a AI is the last living civ, it cities gets invincible)
 - AI will forget on a slower rate your aggressiveness!
+- Overall AI-Toughness is configurable in the mods config-file
 
 All this only kicks in on AI vs. Human or vice versa, AI vs. AI is not modified.
 Having some AI allies is more of a help then ever!
@@ -45,3 +46,4 @@ Support is welcome, but not necessary!
 Maybe you will also enjoy my other mods:
 - "Gift It To Me" - https://steamcommunity.com/sharedfiles/filedetails/?id=1683750352
 - "At A Glance UI" - https://steamcommunity.com/sharedfiles/filedetails/?id=1683762658
+- "Still A Useful Material" - https://steamcommunity.com/sharedfiles/filedetails/?id=2106687881
