@@ -66,12 +66,12 @@ function OnDistrictDamageChanged(playerID:number, districtID:number, damageType:
 			end
 		end
 	end
-	-- print("A District has been damaged");
+	print("A District has been damaged");
 	-- print(playerID, districtID, outerDamage, garrisonDamage);
 end
 
 -- Our custom initialize
-function InitializeNow()
+function Initialize_FAI_CityBannerManager()
 	-- Log execution
 	print("CityBannerManager_FAI.lua: InitializeNow")
 
@@ -83,4 +83,4 @@ function InitializeNow()
 end
 
 -- Our initialize
-InitializeNow();
+Initialize_FAI_CityBannerManager();

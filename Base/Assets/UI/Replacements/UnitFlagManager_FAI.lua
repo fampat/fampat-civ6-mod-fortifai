@@ -50,7 +50,7 @@ function OnUnitDamageChanged(playerID : number, unitID : number, newDamage : num
 end
 
 -- Our custom initialize
-function InitializeNow()
+function Initialize_FAI_UnitFlagManager()
 	-- Log execution
 	print("UnitFlagManager_FAI.lua: InitializeNow")
 
@@ -62,4 +62,4 @@ function InitializeNow()
 end
 
 -- Our initialize
-InitializeNow();
+Initialize_FAI_UnitFlagManager();
