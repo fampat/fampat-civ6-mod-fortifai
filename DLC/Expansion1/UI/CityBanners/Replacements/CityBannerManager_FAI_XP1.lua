@@ -8,11 +8,8 @@ include("CityBannerManager");
 -- Add a log event for loading this
 print("Loading CityBannerManager_FAI_XP1.lua");
 
--- Get the cached events
-ORIGINAL_OnDistrictDamageChanged = OnDistrictDamageChanged;
-
 -- Define our event (overrides the original-event via event-rebind in InitializeNow())
-function OnDistrictDamageChanged(playerID:number, districtID:number, damageType:number, newDamage:number, oldDamage:number)
+function FAI_OnDistrictDamageChanged(playerID:number, districtID:number, damageType:number, newDamage:number, oldDamage:number)
 	local pPlayer = Players[ playerID ];
 	if (pPlayer ~= nil) then
 		local pDistrict = pPlayer:GetDistricts():FindID(districtID);
@@ -71,16 +68,16 @@ function OnDistrictDamageChanged(playerID:number, districtID:number, damageType:
 end
 
 -- Our custom initialize
-function InitializeNow()
+function Initialize_FAI_CityBannerManager()
 	-- Log execution
-	print("CityBannerManager_FAI_XP1.lua: InitializeNow");
+	print("CityBannerManager_FAI_XP1.lua: Initialize_FAI_CityBannerManager");
 
 	-- Unbind the original callback
-	Events.DistrictDamageChanged.Remove(ORIGINAL_OnDistrictDamageChanged);
+	Events.DistrictDamageChanged.Remove(OnDistrictDamageChanged);
 
 	-- Bind our function to the event callback
-	Events.DistrictDamageChanged.Add(OnDistrictDamageChanged);
+	Events.DistrictDamageChanged.Add(FAI_OnDistrictDamageChanged);
 end
 
 -- Our initialize
-InitializeNow();
+Initialize_FAI_CityBannerManager();

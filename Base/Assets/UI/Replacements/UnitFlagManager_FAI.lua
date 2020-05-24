@@ -8,11 +8,12 @@ include("UnitFlagManager");
 -- Add a log event for loading this
 print("Loading UnitFlagManager_FAI.lua");
 
--- Get the cached events
+-- Original function bindings
+ORIGINAL_OnInit = OnInit;
 ORIGINAL_OnUnitDamageChanged = OnUnitDamageChanged;
 
 -- Define our event (overrides the original-event via event-rebind in InitializeNow())
-function OnUnitDamageChanged(playerID : number, unitID : number, newDamage : number, oldDamage : number)
+function FAI_OnUnitDamageChanged(playerID : number, unitID : number, newDamage : number, oldDamage : number)
 	local pPlayer = Players[ playerID ];
 
 	if (pPlayer ~= nil) then
@@ -49,16 +50,24 @@ function OnUnitDamageChanged(playerID : number, unitID : number, newDamage : num
 	end
 end
 
--- Our custom initialize
-function Initialize_FAI_UnitFlagManager()
-	-- Log execution
-	print("UnitFlagManager_FAI.lua: InitializeNow")
+function FAI_OnInit(isHotload)
+	-- Trigger the original init
+	ORIGINAL_OnInit(isHotload);
 
-	-- Unbind the original callback
+	-- Unbind the original callback for damage and heal
 	Events.UnitDamageChanged.Remove(ORIGINAL_OnUnitDamageChanged);
 
-	-- Bind our function to the event callback
-	Events.UnitDamageChanged.Add(OnUnitDamageChanged);
+	-- Bin our version (FAI enhanced)
+	Events.UnitDamageChanged.Add(FAI_OnUnitDamageChanged);
+end
+
+-- Our custom initialize
+function Initialize_FAI_UnitFlagManager()
+  -- Log execution
+	print("UnitFlagManager_FAI.lua: Initialize_FAI_UnitFlagManager")
+
+	-- Change context-init to our function
+	ContextPtr:SetInitHandler(FAI_OnInit);
 end
 
 -- Our initialize
