@@ -164,12 +164,12 @@ function CompensateWithGold(pPlayer, pGoldAmount)
 	end
 end
 
--- Turn-end event
-function OnTurnEnd()
+-- Local player turn-end event
+function OnLocalPlayerTurnEnd()
 	-- If repairs happend, trigger a message
 	if goldCompensationThisTurn > 0 then
 		-- Status message for war repairs for the AI
-		ExposedMembers.StatusMessage(Locale.Lookup("LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_UNITS", goldCompensationThisTurn), 10);
+		ExposedMembers.StatusMessage(Locale.Lookup("LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_UNITS", goldCompensationThisTurn));
 
 		-- Reset the gold-counter
 		goldCompensationThisTurn = 0;
@@ -177,16 +177,17 @@ function OnTurnEnd()
 end
 
 -- In case a human ranged unit damaged a AI melee unit, heal the unit
-function OnUnitDamageChanged(playerID:number, unitID:number, newDamage:number, oldDamage:number)
+function OnUnitDamageChanged(playerID, unitID, newDamage, oldDamage)
 	-- Fetch the player (damaged player)
 	local dPlayer = Players[playerID];
 
 	-- Make sure the damaged player is an AI
 	if (dPlayer ~= nil and not dPlayer:IsHuman() and not dPlayer:IsBarbarian()) then
+
 		-- If the combat damaged a valid defender (human attacker vs AI defender)
 		if unitCombatValidDefender.unitID ~= nil then
 			-- Collect defender data
-			local dPlayer = Players[playerID];
+			dPlayer = Players[playerID];
 			local dUnit = dPlayer:GetUnits():FindID(unitID);
 			local dEra = GameInfo.Eras[dPlayer:GetEra()];
 
@@ -317,7 +318,7 @@ function OnUnitDamageChanged(playerID:number, unitID:number, newDamage:number, o
 	end
 end
 
-function OnDistrictDamageChanged(playerID:number, districtID:number, damageType:number, newDamage:number, oldDamage:number)
+function OnDistrictDamageChanged(playerID, districtID, damageType, newDamage, oldDamage)
 	-- Fetch the player (damaged player)
 	local pPlayer = Players[playerID];
 
@@ -671,7 +672,7 @@ function Initialize()
 	Events.Combat.Add(OnCombat);
 
 	-- Game-event for ending the turn
-	Events.TurnEnd.Add(OnTurnEnd);
+	Events.LocalPlayerTurnEnd.Add(OnLocalPlayerTurnEnd);
 
 	-- Init exposed message variable
 	ExposedMembers.FortifAIUnit = nil;

@@ -7,100 +7,73 @@
 include( "InstanceManager" );
 
 -- Display default time, ten seconds
-local DEFAULT_TIME_TO_DISPLAY = 10;
+local DEFAULT_TIME_TO_DISPLAY = 7;
 
--- Message handling variable
-local m_fortifAIIM = InstanceManager:new( "FortifAIMessageInstance", "Root", Controls.StackOfFortifAIMessages );
-local m_kMessages = {};
+-- Message handling variables
+local messageIM = InstanceManager:new("FortifAIMessageInstance", "FortifAIMessageContainer", Controls.FortifAIMessageStack);
 
-function OnStatusMessage(message, fDisplayTime)
-	-- If a meesage has been set
+-- Callback for handling messsage-requests
+function OnStatusMessage(message, messageDisplayTimeSec)
+	-- If a message has been set
 	if message ~= nil then
-		-- Instance handling
-		local kTypeEntry = m_kMessages[0];
+		-- Fetch the stack of message InGame-Context of lua/xml file: Base/Assets/UI/Panels/StatusMessagePanels.lua/xml
+		local defaultStack = ContextPtr:LookUpControl("/InGame/StatusMessagePanel/DefaultStack");
 
-		-- Message type
-		if (kTypeEntry == nil) then
-			m_kMessages[0] = {
-				InstanceManager = nil,
-				MessageInstances= {}
-			};
-
-			-- Dunno... stuff nonetheless
-			kTypeEntry = m_kMessages[0];
-			kTypeEntry.InstanceManager	= m_fortifAIIM;
+		-- If its present, continue
+		if defaultStack ~= nil then
+			-- Append this messages to the status-messages
+			Controls.FortifAIMessageStack:ChangeParent(defaultStack);
 		end
 
 		-- UI Instancing
-		local pInstance:table = kTypeEntry.InstanceManager:GetInstance();
-		table.insert(kTypeEntry.MessageInstances, pInstance);
+		local messageInstance = messageIM:GetInstance();
 
-		-- Display time relative to each other
-		local timeToDisplay:number = (fDisplayTime > 0) and fDisplayTime or DEFAULT_TIME_TO_DISPLAY;
+		-- Display time
+		local timeToDisplay = (messageDisplayTimeSec ~= nil and messageDisplayTimeSec > 0) and messageDisplayTimeSec or DEFAULT_TIME_TO_DISPLAY;
 
 		-- Each messages instance configurations and text
-		pInstance.StatusLabel:SetText(message);
-		pInstance.Anim:SetEndPauseTime(timeToDisplay);
-		pInstance.Anim:RegisterEndCallback(function() OnEndAnim(kTypeEntry,pInstance) end);
-		pInstance.Anim:SetToBeginning();
-		pInstance.Anim:Play();
-		pInstance.Button:RegisterCallback(Mouse.eLClick, function() OnMessageClicked(kTypeEntry, pInstance) end);
+		messageInstance.Message:SetText(message);
+		messageInstance.Anim:SetEndPauseTime(timeToDisplay);
+		messageInstance.Anim:RegisterEndCallback(function() removeMessage(messageInstance, defaultStack) end);
+		messageInstance.Anim:SetToBeginning();
+		messageInstance.Anim:Play();
+		messageInstance.Button:RegisterCallback(Mouse.eLClick, function() removeMessage(messageInstance, defaultStack) end);
 
-		-- Possible not needed because this messages get attached to the base-game status.messages
-		Controls.StackOfFortifAIMessages:CalculateSize();
-		Controls.StackOfFortifAIMessages:ReprocessAnchoring();
+		-- Caclulate stack sizes after instancing
+		Controls.FortifAIMessageStack:CalculateSize();
+		Controls.FortifAIMessageStack:ReprocessAnchoring();
+		defaultStack:CalculateSize();
+		defaultStack:ReprocessAnchoring();
 	end
 end
 
--- Attach the custom fortifai messages to the default status message stack
-function AttachMessageToStatusMessages ()
-	-- Fetch the stack of message InGame-Context of lua/xml file: Base/Assets/UI/Panels/StatusMessagePanels.lua/xml
-	local StackOfMessages:table = ContextPtr:LookUpControl("/InGame/StatusMessagePanel/StackOfMessages");
+-- Message removal
+function removeMessage(messageInstance, defaultStack)
+	if (messageInstance ~= nil) then
+		-- Remove tha callback
+		messageInstance.Anim:ClearEndCallback();
+		messageIM:ReleaseInstance(messageInstance);
 
-	-- If its present, continue
-	if StackOfMessages ~= nil then
-		-- Append this messages to the status-messages
-		StackOfMessages:AddChildAtIndex(Controls.StackOfFortifAIMessages, 1);
+		-- Caclulate stack size after instances has been released
+		if (Controls.FortifAIMessageStack ~= nil) then
+			Controls.FortifAIMessageStack:CalculateSize();
+			Controls.FortifAIMessageStack:ReprocessAnchoring();
+		end
 
-		-- Re-anchor and calculation for proper display
-		StackOfMessages:CalculateSize();
-		StackOfMessages:ReprocessAnchoring();
+		-- Caclulate stack size after instances has been released
+		if (defaultStack ~= nil) then
+			defaultStack:CalculateSize();
+			defaultStack:ReprocessAnchoring();
+		end
 	end
-end
-
--- Remove the message after its timeouted
-function OnEndAnim(kTypeEntry, pInstance)
-	RemoveMessage(kTypeEntry, pInstance);
-end
-
--- Remove message on click
-function OnMessageClicked(kTypeEntry, pInstance)
-	RemoveMessage(kTypeEntry, pInstance);
-end
-
--- Message removal helper
-function RemoveMessage(kTypeEntry, pInstance)
-	pInstance.Anim:ClearEndCallback();
-	Controls.StackOfFortifAIMessages:CalculateSize();
-	Controls.StackOfFortifAIMessages:ReprocessAnchoring();
-	kTypeEntry.InstanceManager:ReleaseInstance(pInstance);
-end
-
--- What to do if the game view is initialized
-function OnLoadGameViewStateDone()
-	-- We attach our messages to the status message, its modding afterall isnt it?
-	AttachMessageToStatusMessages();
 end
 
 -- Init, uknow...
 function Initialize()
-	-- Add event handle for done initializing game view
-	Events.LoadGameViewStateDone.Add(OnLoadGameViewStateDone);
-
-	-- Map the status-message funtion to a exposed member
+	-- Map the status-message function to a exposed member
 	ExposedMembers.StatusMessage = OnStatusMessage;
 
-	-- Init message log
+	--Init message log
 	print("Initialized.");
 end
 

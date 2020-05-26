@@ -18,6 +18,7 @@ To summarize it somewhat:
 - No possibility of winning against AI with "kind-of-domination-victory" if domination victory is disabled! (If a AI is the last living civ, it cities gets invincible)
 - AI will forget on a slower rate your aggressiveness!
 - Overall AI-Toughness is configurable in the mods config-file
+- Overall scalability via config-file
 
 All this only kicks in on AI vs. Human or vice versa, AI vs. AI is not modified.
 Having some AI allies is more of a help then ever!
@@ -25,10 +26,10 @@ Having some AI allies is more of a help then ever!
 If you're a player who don't like asymmetrical gameplay, this mod is _not_ for you.
 
 [b]What's next?[/b]
-- Nothing planned right now, might change!
+- No new features planned right now
 
 [b]Known issues[/b]
-- None right now
+- None right now :)
 
 [b]Game-versions & Localizations[/b]
 Works with Basegame, R&F and GS.

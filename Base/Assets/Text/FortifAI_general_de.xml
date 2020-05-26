@@ -26,10 +26,10 @@
   		<Text>Feindesland! [COLOR_GREEN]+{1_Num}[ENDCOLOR] Heilung</Text>
   	</Replace>
   	<Replace Tag="LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_DISTRICTS" Language="de_DE">
-  		<Text>Kriegsreparaturen gegen die Menscheit, KI erhält: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold (Distrikt-Schäden)</Text>
+  		<Text>Kriegsreparaturen gegen die Menscheit, KI erhielt: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold (Distrikt-Schäden)</Text>
   	</Replace>
   	<Replace Tag="LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_UNITS" Language="de_DE">
-  		<Text>Kriegsreparaturen gegen die Menscheit, KI erhält: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold (Einheiten-Schäden)</Text>
+  		<Text>Kriegsreparaturen gegen die Menscheit, KI erhielt: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold (Einheiten-Schäden)</Text>
   	</Replace>
   	<Replace Tag="LOC_WORLD_REINFOCEMENT_GARRISON" Language="de_DE">
   		<Text>Verstärkung ist erschienen!</Text>

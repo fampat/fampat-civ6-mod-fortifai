@@ -26,10 +26,10 @@
   		<Text>ForAIgn territory healing! [COLOR_GREEN]+{1_Num}[ENDCOLOR] Health</Text>
   	</Row>
   	<Row Tag="LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_DISTRICTS">
-  		<Text>War repAIrs against humanity, AI gets: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold for damaged districts</Text>
+  		<Text>War repAIrs against humanity, AI got: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold for damaged districts</Text>
   	</Row>
   	<Row Tag="LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_UNITS">
-  		<Text>War repAIrs against humanity, AI gets: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold for damaged units</Text>
+  		<Text>War repAIrs against humanity, AI got: [COLOR_FLOAT_GOLD]+{1_Num}[ENDCOLOR] Gold for damaged units</Text>
   	</Row>
   	<Row Tag="LOC_WORLD_REINFOCEMENT_GARRISON">
   		<Text>Reinforcement arrived!</Text>

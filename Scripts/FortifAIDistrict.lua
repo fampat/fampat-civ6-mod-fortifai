@@ -454,12 +454,12 @@ function OnCombat(combatResult)
     end
 end
 
--- Turn-end event
-function OnTurnEnd()
+-- Local player turn-end event
+function OnLocalPlayerTurnEnd()
 	-- If repairs happend, trigger a message
 	if goldCompensationThisTurn > 0 then
 		-- Notify the player of what he has done!
-		ExposedMembers.StatusMessage(Locale.Lookup("LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_DISTRICTS", goldCompensationThisTurn), 10);
+		ExposedMembers.StatusMessage(Locale.Lookup("LOC_FORTIFAI_WAR_REPAIR_AGAINST_HUMANITY_DISTRICTS", goldCompensationThisTurn));
 
 		-- Reset the gold-counter
 		goldCompensationThisTurn = 0;
@@ -491,7 +491,7 @@ function Initialize()
 	Events.DistrictDamageChanged.Add(OnDistrictDamageChanged);
 
 	-- Game-event for ending the turn
-	Events.TurnEnd.Add(OnTurnEnd);
+	Events.LocalPlayerTurnEnd.Add(OnLocalPlayerTurnEnd);
 
 	-- Event hook to get notified if a combat takes place
 	Events.Combat.Add(OnCombat);
