@@ -48,3 +48,4 @@ Maybe you will also enjoy my other mods:
 - "Gift It To Me" - https://steamcommunity.com/sharedfiles/filedetails/?id=1683750352
 - "At A Glance UI" - https://steamcommunity.com/sharedfiles/filedetails/?id=1683762658
 - "Still A Useful Material" - https://steamcommunity.com/sharedfiles/filedetails/?id=2106687881
+- "Even It Out" - Upcoming balance changes and scaling difficulties
