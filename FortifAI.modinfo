@@ -8,7 +8,7 @@
     <EnabledByDefault>1</EnabledByDefault>
     <DisabledAtStartup>0</DisabledAtStartup>
   	<CompatibleVersions>1.2,2.0</CompatibleVersions>
-  	<AffectsSavedGames>1</AffectsSavedGames>
+  	<AffectsSavedGames>0</AffectsSavedGames>
   </Properties>
 
   <ActionCriteria>
