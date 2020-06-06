@@ -35,6 +35,16 @@ function OnUnitKilledInCombat(dPlayerID, dUnitID, aPlayerID, aUnitID)
 		local dUnit = dPlayer:GetUnits():FindID(dUnitID);
 		local aUnit = aPlayer:GetUnits():FindID(aUnitID);
 
+		-- Fetch players era data
+		local pEra = GameInfo.Eras[aPlayer:GetEra()];
+
+		-- If the human player is not at the effect-start-era, do nothing
+		if pEra.ChronologyIndex < effectStartAtEra then
+			-- Debug log
+			WriteToLog("FortifAI effectStartAtEra not reached, bailing OnUnitKilledInCombat!");
+			return;
+		end
+
 		-- Units are real?
 		if (dUnit ~= nil and aUnit ~= nil) then
 			local dUnitFormationClass = GameInfo.Units[dUnit:GetType()].FormationClass;
@@ -200,7 +210,17 @@ function OnUnitDamageChanged(playerID, unitID, newDamage, oldDamage)
 				local aUnit = aPlayer:GetUnits():FindID(aUnitID);
 
 				-- Units are real?
-				if (aPlayer ~= nil and aUnit ~= nil) then
+				if (aPlayer ~= nil and aUnit ~= nil and aPlayer:IsHuman()) then
+					-- Fetch players era data
+					local pEra = GameInfo.Eras[aPlayer:GetEra()];
+
+					-- If the human player is not at the effect-start-era, do nothing
+					if pEra.ChronologyIndex < effectStartAtEra then
+						-- Debug log
+						WriteToLog("FortifAI effectStartAtEra not reached, bailing OnUnitDamageChanged!");
+						return;
+					end
+
 					-- Reset unit damage validation
 					unitCombatValidDefender.unitID = nil;
 
@@ -324,6 +344,20 @@ function OnDistrictDamageChanged(playerID, districtID, damageType, newDamage, ol
 
 	-- Extra damage only applies to human players (attacker check for AI is done in OnCombat)
 	if (pPlayer ~= nil and pPlayer:IsHuman()) then
+		-- Fetch players era data
+		local pEra = GameInfo.Eras[pPlayer:GetEra()];
+
+		-- If the human player is not at the effect-start-era, do nothing
+		if pEra.ChronologyIndex < effectStartAtEra then
+			-- Reset district attacked-once flag
+			districtAttackedOnce.districtID = nil;
+
+			-- Debug log
+			WriteToLog("FortifAI effectStartAtEra not reached, bailing OnDistrictDamageChanged!");
+
+			return;
+		end
+
 		-- Fetch the district types we want to act on
 		local gDistrictCityCenterIndex = GameInfo.Districts["DISTRICT_CITY_CENTER"].Index;
 		local gDistrictEncampementIndex = GameInfo.Districts["DISTRICT_ENCAMPMENT"].Index;
@@ -434,7 +468,7 @@ end
 
 function OnCombat(combatResult)
 	-- Hook into district combat
-    if (combatResult[CombatResultParameters.DEFENDER][CombatResultParameters.ID].type == ComponentType.DISTRICT) then
+  if (combatResult[CombatResultParameters.DEFENDER][CombatResultParameters.ID].type == ComponentType.DISTRICT) then
 		-- Reset district flag
 		local districtID = combatResult[CombatResultParameters.DEFENDER][CombatResultParameters.ID].id;
 
@@ -453,13 +487,24 @@ function OnCombat(combatResult)
 
 		-- Attacker is AI and defender is human
 		if (aPlayer ~= nil and not aPlayer:IsHuman() and not aPlayer:IsBarbarian() and dPlayer ~= nil and dPlayer:IsHuman()) then
+			-- Fetch players era data
+			local pEra = GameInfo.Eras[dPlayer:GetEra()];
+
+			-- If the human player is not at the effect-start-era, do nothing
+			if pEra.ChronologyIndex < effectStartAtEra then
+				-- Debug log
+				WriteToLog("FortifAI effectStartAtEra not reached, bailing OnCombat!");
+
+				return;
+			end
+
 			districtAttackedOnce.districtID = "ATTACKED";
 			districtCombatValidDefender.districtID = "DEFENDER";
 		end
-    end
+  end
 
-	-- Hook into unit combat
-    if (combatResult[CombatResultParameters.DEFENDER][CombatResultParameters.ID].type == ComponentType.UNIT) then
+		-- Hook into unit combat
+  if (combatResult[CombatResultParameters.DEFENDER][CombatResultParameters.ID].type == ComponentType.UNIT) then
 		-- Reset unit flag
 		local unitID = combatResult[CombatResultParameters.DEFENDER][CombatResultParameters.ID].id;
 
@@ -477,6 +522,17 @@ function OnCombat(combatResult)
 
 		-- Attacker is human and defender is AI (not free cities AI)
 		if (aPlayer ~= nil and aPlayer:IsHuman() and dPlayer ~= nil and not dPlayer:IsHuman() and not dPlayer:IsBarbarian()) then
+			-- Fetch players era data
+			local pEra = GameInfo.Eras[aPlayer:GetEra()];
+
+			-- If the human player is not at the effect-start-era, do nothing
+			if pEra.ChronologyIndex < effectStartAtEra then
+				-- Debug log
+				WriteToLog("FortifAI effectStartAtEra not reached, bailing OnCombat!");
+
+				return;
+			end
+
 			local aUnitID = combatResult[CombatResultParameters.ATTACKER][CombatResultParameters.ID].id;
 
 			-- Check leader type to filter for free city AI

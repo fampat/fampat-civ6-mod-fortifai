@@ -45,6 +45,15 @@ function OnDistrictDamageChanged(playerID, districtID, damageType, newDamage, ol
 			-- Fetch players era data
 			local pEra = GameInfo.Eras[pPlayer:GetEra()];
 
+			-- If the human player is not at the effect-start-era, do nothing
+			if pEra.ChronologyIndex < effectStartAtEra then
+				-- Reset district attacked-once flag
+				districtAttackedOnce.districtID = nil;
+				WriteToLog("FortifAI effectStartAtEra not reached, bailing OnDistrictDamageChanged!");
+
+				return;
+			end
+
 			-- Initialize heal modifiers
 			local eGarrisonModifier = effectScale(0.0);
 			local eOuterDefenseModifier = effectScale(0.0);
@@ -441,6 +450,15 @@ function OnCombat(combatResult)
 		-- Extra healing-trigger only apply to AI defenders if the attacker is human and local player
 		-- Also this only triggers if the AI is weaker in regards to military strength and city count
 		if (aPlayer ~= nil and aPlayer:IsHuman() and dPlayer ~= nil and not dPlayer:IsHuman() and not dPlayer:IsBarbarian()) then
+			-- Fetch players era data
+			local pEra = GameInfo.Eras[aPlayer:GetEra()];
+
+			-- If the human player is not at the effect-start-era, do nothing
+			if pEra.ChronologyIndex < effectStartAtEra then
+				WriteToLog("FortifAI effectStartAtEra not reached, bailing OnCombat!");
+				return;
+			end
+
 			-- Check leader type to filter for free city AI
 			local dLeaderTypeName = PlayerConfigurations[dPlayer:GetID()]:GetLeaderTypeName();
 

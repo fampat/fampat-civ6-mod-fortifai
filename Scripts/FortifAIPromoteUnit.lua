@@ -48,6 +48,17 @@ function OnUnitKilledInCombat(pVictimID, unitKilledID, pKillerID, unitAttackerID
 			-- Unit promotions only apply to AI players (if a unit dies and the killer is within AIs borders)
 			if (pPlayerVictim ~= nil and not pPlayerVictim:IsHuman() and not pPlayerVictim:IsBarbarian() and
 				pPlayerKiller:IsHuman() and killerInAIBorders) then
+
+				-- Fetch players era data
+				local pEra = GameInfo.Eras[pPlayerKiller:GetEra()];
+
+				-- If the human player is not at the effect-start-era, do nothing
+				if pEra.ChronologyIndex < effectStartAtEra then
+					-- Debug log
+					WriteToLog("FortifAI effectStartAtEra not reached, bailing OnUnitKilledInCombat!");
+					return;
+				end
+
 				-- Victims units
 				local pUnits = pPlayerVictim:GetUnits();
 

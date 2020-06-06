@@ -9,3 +9,6 @@
 -- Scale ranges from 0.0 to 2.0, a value of 2.0 result in an unbeatable war-AI
 -- Lesser value provides lesser hardening, higher is more tought to crack AI
 effectScaleValue = 0.50; -- Just change the number, keep the format X.XX
+
+-- When does the effect kicks in
+effectStartAtEra = 6; -- Modern
